@@ -9,19 +9,63 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
-public:
+
+
+    bool isEqual(TreeNode* curr1, TreeNode* curr2)
+    {
+        if(curr1==NULL && curr2==NULL)
+            return true;
+        if(curr1!=NULL && curr2==NULL)
+            return false;
+        if(curr1==NULL && curr2!=NULL)
+            return false;
+        if(curr1->val!=curr2->val)
+            return false;
+        return true;
+    }
+
+    
+
+class Solution 
+{
+    public:
+
     bool flipEquiv(TreeNode* root1, TreeNode* root2) 
     {
-        if(root1==NULL && root2==NULL)
-            return true;
-        if(root1==NULL && root2!=NULL)
-            return false;
-        if(root1!=NULL && root2==NULL)
-            return false;
-        if(root1->val!=root2->val)
-            return false;
-        return ((flipEquiv(root1->left,root2->left)==true && flipEquiv(root1->right, root2->right)==true) || (flipEquiv(root1->left,root2->right)==true && flipEquiv(root1->right, root2->left)==true));
+        queue<TreeNode*> q;
+        q.push(root1);
+        q.push(root2);
+        
+        while(q.empty()!=1)
+        {
+            TreeNode* curr1 = q.front();
+            q.pop();
+            TreeNode* curr2 = q.front();
+            q.pop();
+            if(curr1==NULL && curr2==NULL)
+                continue;
             
+            if(isEqual(curr1,curr2)==false)
+                return false;
+            
+            if(isEqual(curr1->left,curr2->left)==true && isEqual(curr1->right,curr2->right)==true)
+            {
+                q.push(curr1->left);
+                q.push(curr2->left);
+                q.push(curr1->right);
+                q.push(curr2->right);
+                
+            }
+            else if(isEqual(curr1->left,curr2->right)==true && isEqual(curr1->right,curr2->left)==true)
+            {
+                q.push(curr1->left);
+                q.push(curr2->right);
+                q.push(curr1->right);
+                q.push(curr2->left);              
+            }
+            else
+                return false;
+        }
+        return true;
     }
 };
