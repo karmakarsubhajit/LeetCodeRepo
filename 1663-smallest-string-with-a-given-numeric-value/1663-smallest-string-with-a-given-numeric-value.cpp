@@ -4,13 +4,21 @@ public:
     
     string getSmallestString(int n, int k) 
     {
-        string ans(n,'.');
+        string ans="";
         
-        for(int i=n-1;i>=0;i--)
+        for(int i=0;i<n;i++)
         {
-            int temp = min(k-i,26);
-            ans[i]=(temp-1)+'a';
-            k=k-temp;
+            if(26*(n-i-1)<k)
+            {
+                ans+=(k-26*(n-i-1)-1)+'a';
+                k=26*(n-i-1);
+            }   
+            else
+            {
+                ans+='a';
+                k=k-1;
+            }
+                
         }
         return ans;
     }
