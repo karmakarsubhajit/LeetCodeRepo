@@ -10,12 +10,13 @@ public:
         {
             if(isdigit(word[0]))
             {
-                if(prev>=stoi(word))
+                int temp =stoi(word); 
+                if(prev>=temp)
                 {
                     return false;
                     
                 }
-                prev=stoi(word);
+                prev=temp;
             }
         }
         return true;
