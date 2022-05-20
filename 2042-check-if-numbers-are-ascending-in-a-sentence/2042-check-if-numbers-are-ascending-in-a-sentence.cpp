@@ -2,33 +2,20 @@ class Solution {
 public:
     bool areNumbersAscending(string s) 
     {
-        int l = s.length();
-        int ans = 0;
-        int i = 0;
+        istringstream ss(s);
+        string word;
         int prev = -1;
-        while(i<l)
+        
+        while(ss>>word)
         {
-            if(s[i]>='a' && s[i]<='z')
+            if(isdigit(word[0]))
             {
-                i++;
-                continue;   
-            }
-            else if(s[i]==' ')
-            {
-                i++;
-                continue;
-            }
-            else
-            {
-                int j = i;
-                while(i<l && s[i]>='0' && s[i]<='9')
+                if(prev>=stoi(word))
                 {
-                    i++;
+                    return false;
+                    
                 }
-                int curr = stoi(s.substr(j,i-j));
-                if(curr<=prev)
-                    return false; 
-                prev=curr;
+                prev=stoi(word);
             }
         }
         return true;
