@@ -16,7 +16,7 @@ public:
         int ans = 0;
         vector<int> den{60,15,5,1};
         int i=0;
-        while(i!=4)
+        while(diff!=0)
         {
             ans+=diff/den[i];
             diff%=den[i++];
