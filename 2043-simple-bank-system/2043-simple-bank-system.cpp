@@ -10,40 +10,27 @@ public:
     
     bool transfer(int account1, int account2, long long money) 
     {
-        if(account1<=n && account1>=1 && account2<=n && account2>=1 )
-        {
-            if(baln[account1-1]<money)
-                return false;
-            baln[account2-1]=baln[account2-1]+money;
-            baln[account1-1]=baln[account1-1]-money;
-            return true;
-        }
-        return false;
+        if(account1>n || account2>n || account1<=0 || account2<=0 || baln[account1-1]<money)
+            return false;
+        baln[account2-1]+=money;
+        baln[account1-1]-=money;
+        return true;
     }
     
     bool deposit(int account, long long money) 
     {
-        if(account<=n && account>=1)
-        {
-            baln[account-1]=baln[account-1]+money;
-            return true;    
-        }
-        return false;
-        
+        if(account>n || account<=0)
+            return false;
+        baln[account-1]+=money;
+        return true;
     }
     
     bool withdraw(int account, long long money) 
     {
-        cout<<account<<endl;
-        if(account<=n && account>=1)
-        {
-            if(baln[account-1]<money)
-                return false;
-            baln[account-1]-=money;
-            //cout<<baln[account-1]<<endl;
-            return true;    
-        }
-        return false;
+        if(account>n || account<=0 || baln[account-1]<money)
+            return false;
+        baln[account-1]-=money;
+        return true;
     }
 };
 
