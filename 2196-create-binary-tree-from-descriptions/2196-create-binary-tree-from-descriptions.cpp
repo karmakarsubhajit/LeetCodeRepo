@@ -9,50 +9,41 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-class Solution {
-public:
+class Solution 
+{
+    public:
     TreeNode* createBinaryTree(vector<vector<int>>& descriptions) 
     {
         unordered_map<int, TreeNode*> mp;
-        unordered_map<TreeNode*, int> child;
-
+        
         for(auto it:descriptions)
         {
-            int par = it[0];
-            int ch = it[1];
-            int l = it[2];
-            
-            TreeNode* chNode;
-            TreeNode* pNode;
-            
-            if(mp.find(par)==mp.end())
-            {
-                pNode = new TreeNode(par);
-                mp[par]=pNode;
-            }
-            else
-                pNode=mp[par];
-            
-            if(mp.find(ch)==mp.end())
-            {
-                chNode = new TreeNode(ch);
-                mp[ch]=chNode;
-            }
-            else
-                chNode=mp[ch];
-            
-            if(l==1)
-                pNode->left=chNode;
-            else
-                pNode->right=chNode;
-            
-            child[chNode]=1;    
+            mp[it[1]]=new TreeNode(it[1]);
         }
-        for(auto it:mp)
+        TreeNode* root;
+        for(auto it:descriptions)
         {
-            if(child.find(it.second)==child.end())
-                return mp[it.first];
+            TreeNode* par;
+            TreeNode* ch;
+            if(mp.find(it[0])==mp.end())
+            {
+                root = new TreeNode(it[0]);
+                par = root;
+                mp[it[0]] = root;
+                ch = mp[it[1]];
+            }
+            else
+            {
+                par = mp[it[0]];
+                ch = mp[it[1]];
+            }
+            if(it[2]==1)
+            {
+                par->left = ch;
+            }
+            else
+                par->right = ch;
         }
-        return NULL;
+        return root;
     }
 };
