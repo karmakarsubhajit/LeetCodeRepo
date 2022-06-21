@@ -35,15 +35,18 @@ public:
             return false;
         if(root->val==val)
             return true;
+        
+        p.push_back('L');
         if(getDir(root->left,val,p)==true)
-        {
-            p.push_back('L');
-        }
-        else if(getDir(root->right,val,p)==true)
-        {
-            p.push_back('R');
-        }
-        return(p.length()!=0);
+            return true;
+        p.pop_back();
+        
+        p.push_back('R');
+        if(getDir(root->right,val,p)==true)
+            return true;
+        p.pop_back();
+        
+        return false;
     }
     
     string getDirections(TreeNode* root, int startValue, int destValue) 
@@ -55,15 +58,22 @@ public:
         getDir(root, destValue, destStr);
 
         
-        while(startStr.length()!=0 && destStr.length()!=0 && startStr.back()==destStr.back())
+        int i=0;
+        int j=0;
+        while(i<startStr.length() && j<destStr.length())
         {
-            startStr.pop_back();
-            destStr.pop_back();
+            if(startStr[i]!=destStr[j])
+                break;
+            else
+            {
+                i++;
+                j++;
+            }
         }
-        reverse(startStr.begin(),startStr.end());
-        reverse(destStr.begin(),destStr.end());
-        
-        string t(startStr.length(),'U');
-        return t+destStr;
+        startStr = startStr.substr(i);
+        destStr = destStr.substr(j);
+        string ans (startStr.length(),'U');
+        ans+=destStr;
+        return ans;
     }
 };
