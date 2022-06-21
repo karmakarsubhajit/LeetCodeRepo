@@ -54,24 +54,11 @@ public:
         TreeNode* lca = getLCA(root,startValue,destValue);
         string startStr="";
         string destStr="";
-        getDir(root, startValue, startStr);
-        getDir(root, destValue, destStr);
+        getDir(lca, startValue, startStr);
+        getDir(lca, destValue, destStr);
 
-        
-        int i=0;
-        int j=0;
-        while(i<startStr.length() && j<destStr.length())
-        {
-            if(startStr[i]!=destStr[j])
-                break;
-            else
-            {
-                i++;
-                j++;
-            }
-        }
-        startStr = startStr.substr(i);
-        destStr = destStr.substr(j);
+     
+
         string ans (startStr.length(),'U');
         ans+=destStr;
         return ans;
