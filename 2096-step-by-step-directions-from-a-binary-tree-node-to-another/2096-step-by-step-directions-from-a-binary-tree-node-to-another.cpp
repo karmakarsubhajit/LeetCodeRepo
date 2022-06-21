@@ -12,29 +12,43 @@
 class Solution {
 public:
     
-    bool getDir(TreeNode* root, int val, string& path)
+    TreeNode* getLCA(TreeNode* root,  int startValue, int destValue)
+    {
+        if(root==NULL)
+            return NULL;
+        if(root->val==startValue || root->val==destValue)
+            return root;
+        TreeNode* lf = getLCA(root->left,startValue,destValue);
+        TreeNode* rt = getLCA(root->right,startValue,destValue);
+        if(lf!=NULL && rt!=NULL)
+            return root;
+        if(lf!=NULL)
+            return lf;
+        else if(rt!=NULL)
+            return rt;
+        return NULL;
+    }
+    
+    bool getDir(TreeNode* root, int val, string& p)
     {
         if(root==NULL)
             return false;
         if(root->val==val)
-        {
             return true;
-        }
-        if(getDir(root->left,val,path)==true)
+        if(getDir(root->left,val,p)==true)
         {
-            path.push_back('L');
+            p.push_back('L');
         }
-        else if(getDir(root->right,val,path)==true)
+        else if(getDir(root->right,val,p)==true)
         {
-            path.push_back('R');
+            p.push_back('R');
         }
-        if(path.empty()==1)
-            return false;
-        return true;
+        return(p.length()!=0);
     }
     
     string getDirections(TreeNode* root, int startValue, int destValue) 
     {
+        TreeNode* lca = getLCA(root,startValue,destValue);
         string startStr="";
         string destStr="";
         getDir(root, startValue, startStr);
