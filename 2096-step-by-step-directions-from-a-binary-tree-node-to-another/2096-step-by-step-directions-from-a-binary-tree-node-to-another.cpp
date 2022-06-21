@@ -39,10 +39,8 @@ public:
         string destStr="";
         getDir(root, startValue, startStr);
         getDir(root, destValue, destStr);
+
         
-        
-        int i=0;
-        int j=0;
         while(startStr.length()!=0 && destStr.length()!=0 && startStr.back()==destStr.back())
         {
             startStr.pop_back();
